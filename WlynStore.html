@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WlynStore Minuman Beralkohol — WlynStore</title>
+  <style>
+    :root{--pink:#ff5c8a;--muted:#f7f2f5;--card:#fff;--text:#222}
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, Arial, sans-serif; margin:0; color:var(--text); background:linear-gradient(180deg,#fefafa 0%, #fffefe 100%)}
+    header{background:var(--pink); color:rgb(8, 8, 8); padding:18px 20px; display:flex; align-items:center; gap:16px}
+    .logo{display:flex; align-items:center; gap:12px}
+    .logo img{width:48px; height:48px; border-radius:8px; object-fit:cover}
+    nav a{color:rgb(0, 0, 0); margin:0 8px; text-decoration:none; font-weight:600}
+    .container{max-width:1100px; margin:28px auto; padding:0 18px}
+    .hero{display:grid; grid-template-columns:1fr 420px; gap:20px; align-items:center}
+    .hero .welcome{background:var(--card); padding:24px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+    .hero h1{margin:0 0 8px 0}
+    .hero p{margin:0 0 12px 0; color:#0e0b0b}
+    .hero .cta{display:flex; gap:12px}
+    button.primary{background:var(--pink); color:white; border:none; padding:10px 14px; border-radius:10px; cursor:pointer}
+    button.ghost{background:transparent; border:1px solid #eee; padding:10px 14px; border-radius:10px; cursor:pointer}
+
+    /* product grid */
+    .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px; margin-top:24px}
+    .card{background:var(--card); border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04)}
+    .card img{width:100%; height:180px; object-fit:cover; border-radius:8px}
+    .card h3{margin:10px 0 6px}
+    .price{font-weight:700; color:var(--pink)}
+    .card .meta{display:flex; justify-content:space-between; align-items:center; gap:8px}
+
+    /* cart */
+    .cart{position:fixed; right:18px; bottom:18px; background:var(--card); padding:12px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.12); width:340px; max-height:70vh; overflow:auto}
+    .cart h4{margin:0 0 10px}
+    .cart .item{display:flex; gap:8px; margin-bottom:8px}
+    .cart .item img{width:56px; height:56px; object-fit:cover; border-radius:6px}
+    .small{font-size:13px; color:#0b0b0b}
+
+    /* footer */
+    footer{margin-top:40px; padding:20px; text-align:center; color:#fffefe}
+
+    /* age gate modal */
+    .modal-backdrop{position:fixed; inset:0; background:rgb(254, 252, 252); display:flex; align-items:center; justify-content:center; z-index:9999; transition:opacity .4s ease}
+    .modal-hide{opacity:0; pointer-events:none;}
+    .age-modal{background:white; padding:22px; width:420px; border-radius:12px; text-align:center}
+    .age-modal h2{margin:0 0 8px}
+    .notice{background:#fff4f6; border-left:4px solid var(--pink); padding:10px; margin-top:12px; border-radius:8px}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .cart{width:92%; left:4%; right:4%}
+    }
+  </style>
+</head>
+<body>
+  <!-- AGE VERIFICATION -->
+  <div id="ageGate" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Verifikasi Usia">
+    <div class="age-modal">
+      <img src="https://i.pinimg.com/736x/49/b5/5c/49b55cbe18269928ecde66b6f9cd734b.jpg" alt="age" style="width:100%; height:140px; object-fit:cover; border-radius:8px; margin-bottom:12px">
+      <h2>Periksa Usia Anda</h2>
+      <p class="small">Anda harus berusia minimal <span id="ageLimitText">21</span> tahun untuk mengunjungi toko ini. Silakan konfirmasi usia Anda.</p>
+      <div style="margin-top:16px; display:flex; gap:10px; justify-content:center">
+        <button id="confirmAge" class="primary">Saya Berusia 21+</button>
+        <button id="denyAge" class="ghost">Saya Belum Cukup Umur</button>
+      </div>
+      <p class="small notice">Catatan: Pastikan mematuhi hukum setempat terkait penjualan dan konsumsi minuman beralkohol. Sesuaikan batas usia sesuai regulasi di wilayah Anda.</p>
+    </div>
+  </div>
+
+  <header>
+    <div class="logo">
+      <img src="https://i.pinimg.com/1200x/d5/b7/be/d5b7be37d7a9e31ff216c1e650eff84b.jpg" alt="Logo">
+      <div>
+        <div style="font-weight:800">Bazar Minuman</div>
+        <div style="font-size:13px; opacity:0.9">Minuman beralkohol &amp; craft seleksi</div>
+      </div>
+    </div>
+    <nav style="margin-left:auto">
+      <a href="#produk">Produk</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="welcome">
+        <h1>Beli bir, wine & spirit pilihan — Aman & Terpercaya</h1>
+        <p>Platform demo untuk menjual minuman beralkohol secara online. Terdapat fitur usia minimum, keranjang belanja, dan pesanan mock.</p>
+        <div class="cta">
+          <button class="primary" onclick="document.getElementById('produk').scrollIntoView({behavior:'smooth'})">Lihat Produk</button>
+          <button class="ghost" onclick="alert('Demo: fitur chat belum tersedia')">Hubungi Penjual</button>
+        </div>
+      </div>
+      <div>
+        <img src="https://i.pinimg.com/736x/ec/ca/97/ecca978b4d0841d44093e30ad4d48227.jpg" alt="produk showcase" style="width:100%; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.08)">
+      </div>
+    </section>
+
+    <section id="produk">
+      <h2 style="margin-top:26px">Produk Unggulan</h2>
+      <div class="grid" id="productGrid"></div>
+    </section>
+
+    <section id="tentang">
+      <h2 style="margin-top:32px">Tentang Toko WlynStore</h2>
+      <p class="small">WlynStore adalah toko daring yang menyediakan berbagai pilihan minuman beralkohol berkualitas, mulai dari wine, whiskey, vodka, hingga liqueur premium dari berbagai merek internasional. Kami berkomitmen untuk memberikan pengalaman belanja yang aman, nyaman, dan bertanggung jawab bagi pelanggan dewasa.
+
+Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar penyimpanan terbaik, dan hanya tersedia untuk pelanggan yang telah berusia di atas 21 tahun. Kami percaya bahwa menikmati minuman beralkohol adalah bagian dari gaya hidup elegan, selama dilakukan dengan penuh tanggung jawab.
+
+⚠️ Catatan: WlynStore hanya melayani wilayah yang memperbolehkan penjualan minuman beralkohol sesuai dengan hukum yang berlaku. Dukung kampanye “Drink Responsibly” — nikmati tanpa berlebihan..</p>
+    </section>
+
+    <section id="kontak">
+      <h2 style="margin-top:18px">Kontak & Bantuan</h2>
+      <p class="small">Email: support@WlynStoremnmalcohol.demo</p>
+      <p class="small">Telepon: 085-71109-3974</p>
+    </section>
+
+    <footer>
+      <small>© 2025 WlynStore — Minum dengan tanggung jawab. Produk hanya untuk usia yang memenuhi syarat.</small>
+    </footer>
+  </main>
+
+  <!-- CART -->
+  <aside class="cart" id="cartPanel">
+    <h4>Keranjang</h4>
+    <div id="cartItems"></div>
+    <div style="border-top:1px dashed #080808; padding-top:10px; margin-top:8px">
+      <div style="display:flex; justify-content:space-between"><div class="small">Subtotal</div><div id="subtotal">Rp0</div></div>
+      <div style="margin-top:10px; display:flex; gap:8px">
+        <button class="primary" id="checkoutBtn">Checkout</button>
+        <button class="ghost" id="clearCart">Kosongkan</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- SCRIPT -->
+  <script>
+    const ageLimit = 21;
+    document.getElementById('ageLimitText').innerText = ageLimit;
+
+    // Data produk diperbaiki (tanpa error)
+    const products = [
+  {
+    id: 1,
+    title: 'Black Label — 40% alcohol 750ml',
+    price: 850000,
+    img: 'https://i.pinimg.com/1200x/9b/d5/db/9bd5dbe4b9f079b38e441c6f9fb16695.jpg'
+  },
+  {
+    id: 2,
+    title: 'Red Wine — Valle doro 750ml',
+    price: 500000,
+    img: 'https://i.pinimg.com/736x/4e/c3/60/4ec3605e8c6996fca67b872708febdb1.jpg'
+  },
+  {
+    id: 3,
+    title: 'Henessy — Oak Reserve 700ml',
+    price: 1200000,
+    img: 'https://i.pinimg.com/1200x/5f/45/d2/5f45d2b849d80c0a2507b81a54fa4a41.jpg'
+  },
+  {
+    id: 4,
+    title: 'Vodka — Crystal Pure 700ml',
+    price: 940000,
+    img: 'https://i.pinimg.com/736x/19/9c/39/199c39cbc64abc4e136e893b5a7b2b40.jpg'
+  },
+  {
+    id: 5,
+    title: 'Anggur Merah— Orang Tua 750ml',
+    price: 150000,
+    img: 'https://i.pinimg.com/736x/bb/53/e2/bb53e29b3f40ada992b791664c12f040.jpg'
+  },
+  {
+    id: 6,
+    title: 'Red Label’s — 700ml',
+    price: 480000,
+    img: 'https://i.pinimg.com/736x/de/c3/ea/dec3ea1524639a65c0c5c234f4ec4c80.jpg'
+  }
+];
+
+    // Render produk
+    const grid = document.getElementById('productGrid');
+    products.forEach(p=>{
+      const el = document.createElement('div'); el.className='card';
+      el.innerHTML=`
+        <img src="${p.img}" alt="${p.title}">
+        <h3>${p.title}</h3>
+        <div class="meta"><div class="price">Rp${p.price.toLocaleString('id')}</div><button class="primary" onclick="addToCart(${p.id})">Tambah</button></div>
+      `;
+      grid.appendChild(el);
+    });
+
+    // Logika keranjang
+    let cart = JSON.parse(localStorage.getItem('demoCart')||'[]');
+    const cartItemsEl = document.getElementById('cartItems');
+    const subtotalEl = document.getElementById('subtotal');
+
+    function saveCart(){ localStorage.setItem('demoCart', JSON.stringify(cart)); renderCart(); }
+    function addToCart(id){
+      const prod = products.find(x=>x.id===id);
+      const exists = cart.find(x=>x.id===id);
+      if(exists){ exists.qty += 1; } else { cart.push({id:prod.id, title:prod.title, price:prod.price, img:prod.img, qty:1}); }
+      saveCart();
+      alert('Produk ditambahkan ke keranjang');
+    }
+    function renderCart(){
+      cartItemsEl.innerHTML='';
+      let total=0;
+      if(cart.length===0){ cartItemsEl.innerHTML='<p class="small">Keranjang kosong</p>'; subtotalEl.innerText='Rp0'; return; }
+      cart.forEach(item=>{
+        total += item.price * item.qty;
+        const div = document.createElement('div'); div.className='item';
+        div.innerHTML = `<img src="${item.img}" alt=""><div style="flex:1"><div style="font-weight:700">${item.title}</div><div class="small">Rp${item.price.toLocaleString('id')} x ${item.qty}</div></div><div style="display:flex;flex-direction:column;gap:6px"><button onclick="changeQty(${item.id},1)" style="border:none;background:#eee;padding:6px;border-radius:6px">+</button><button onclick="changeQty(${item.id},-1)" style="border:none;background:#eee;padding:6px;border-radius:6px">-</button></div>`;
+        cartItemsEl.appendChild(div);
+      });
+      subtotalEl.innerText = 'Rp' + total.toLocaleString('id');
+    }
+    function changeQty(id, delta){
+      const it = cart.find(x=>x.id===id);
+      if(!it) return;
+      it.qty += delta;
+      if(it.qty<=0) cart = cart.filter(x=>x.id!==id);
+      saveCart();
+    }
+    document.getElementById('clearCart').addEventListener('click',()=>{ if(confirm('Kosongkan keranjang?')){ cart=[]; saveCart(); }});
+
+    document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+      if(cart.length===0){ alert('Keranjang kosong'); return; }
+      const name = prompt('Masukkan nama untuk pemesanan:'); if(!name) return;
+      const phone = prompt('Masukkan no. telepon:'); if(!phone) return;
+      const address = prompt('Masukkan alamat pengiriman:'); if(!address) return;
+      const order = {id:Date.now(), name, phone, address, items:cart, subtotal:cart.reduce((s,i)=>s+i.price*i.qty,0)};
+      localStorage.setItem('lastDemoOrder', JSON.stringify(order));
+      alert('Pesanan dibuat (demo). Nomor pesanan: ' + order.id + '\nCatatan: ini hanya demo.');
+      cart = []; saveCart();
+    });
+
+    renderCart();
+
+    // AGE GATE
+    const ageGate = document.getElementById('ageGate');
+    const confirmAge = document.getElementById('confirmAge');
+    const denyAge = document.getElementById('denyAge');
+
+    if(localStorage.getItem('ageVerified')==='true'){ ageGate.style.display='none'; }
+    confirmAge.addEventListener('click', ()=>{
+      localStorage.setItem('ageVerified','true');
+      ageGate.classList.add('modal-hide');
+      setTimeout(()=> ageGate.style.display='none', 400);
+    });
+    denyAge.addEventListener('click', ()=>{
+      alert('Anda tidak memenuhi syarat usia untuk mengakses toko ini.');
+      window.location.href='about:blank';
+    });
+  </script>
+</body>
+</html>
