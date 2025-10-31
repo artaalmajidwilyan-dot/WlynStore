@@ -235,16 +235,44 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
     }
     document.getElementById('clearCart').addEventListener('click',()=>{ if(confirm('Kosongkan keranjang?')){ cart=[]; saveCart(); }});
 
-    document.getElementById('checkoutBtn').addEventListener('click', ()=>{
-      if(cart.length===0){ alert('Keranjang kosong'); return; }
-      const name = prompt('Masukkan nama untuk pemesanan:'); if(!name) return;
-      const phone = prompt('Masukkan no. telepon:'); if(!phone) return;
-      const address = prompt('Masukkan alamat pengiriman:'); if(!address) return;
-      const order = {id:Date.now(), name, phone, address, items:cart, subtotal:cart.reduce((s,i)=>s+i.price*i.qty,0)};
-      localStorage.setItem('lastDemoOrder', JSON.stringify(order));
-      alert('Pesanan dibuat (demo). Nomor pesanan: ' + order.id + '\nCatatan: ini hanya demo.');
-      cart = []; saveCart();
-    });
+ document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+  if(cart.length === 0){
+    alert('Keranjang kosong');
+    return;
+  }
+
+  const name = prompt('Masukkan nama lengkap Anda:');
+  if(!name) return;
+
+  const address = prompt('Masukkan alamat pengiriman:');
+  if(!address) return;
+
+  const waNumber = '+6285711093974'; 
+
+  // Format pesan WA
+  let message = `*🛒 Pesanan Baru dari WlynStore*\n\n`;
+  message += `*Nama:* ${name}\n`;
+  message += `*Alamat:* ${address}\n\n`;
+  message += `*Daftar Pesanan:*\n`;
+
+  let total = 0;
+  cart.forEach(item=>{
+    total += item.price * item.qty;
+    message += `- ${item.title} x ${item.qty} = Rp${(item.price * item.qty).toLocaleString('id')}\n`;
+  });
+
+  message += `\n*Total:* Rp${total.toLocaleString('id')}\n\n`;
+  message += `_Terima kasih telah berbelanja di WlynStore!_`;
+
+  // Encode dan arahkan ke WhatsApp
+  const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank');
+
+  // Kosongkan keranjang setelah checkout
+  cart = [];
+  saveCart();
+});
+
 
     renderCart();
 
@@ -266,4 +294,5 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
   </script>
 </body>
 </html>
+
 
