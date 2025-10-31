@@ -232,9 +232,7 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
       if(it.qty<=0) cart = cart.filter(x=>x.id!==id);
       saveCart();
     }
-    document.getElementById('clearCart').addEventListener('click',()=>{ if(confirm('Kosongkan keranjang?')){ cart=[]; saveCart(); }});
-
-   document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+    document.getElementById('checkoutBtn').addEventListener('click', ()=>{
   if(cart.length === 0){
     alert('Keranjang kosong');
     return;
@@ -246,7 +244,7 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
   const address = prompt('Masukkan alamat pengiriman:');
   if(!address) return;
 
-  const waNumber = '+6285711093974'; 
+  const waNumber = '6285711093974'; // tanpa tanda + lebih aman untuk wa.me link
 
   // Format pesan WA
   let message = `*🛒 Pesanan Baru dari WlynStore*\n\n`;
@@ -264,8 +262,8 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
   message += `_Terima kasih telah berbelanja di WlynStore!_`;
 
   // Encode dan arahkan ke WhatsApp
-  const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
- window.location.href = waUrl;
+  const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+  window.location.href = waUrl; // ini baris penting
 
   // Kosongkan keranjang setelah checkout
   cart = [];
@@ -293,4 +291,5 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
   </script>
 </body>
 </html>
+
 
