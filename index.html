@@ -4,8 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WlynStore Minuman Beralkohol — WlynStore</title>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RD060NQF35"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RD060NQF35"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -80,8 +79,8 @@
     <div class="logo">
       <img src="https://i.pinimg.com/1200x/d5/b7/be/d5b7be37d7a9e31ff216c1e650eff84b.jpg" alt="Logo">
       <div>
-        <div style="font-weight:800">Wlynstore Minuman</div>
-        <div style="font-size:13px; opacity:0.9">Minuman beralkohol &amp; Haram tapi enak </div>
+        <div style="font-weight:800">Wlynastore Minuman</div>
+        <div style="font-size:13px; opacity:0.9">Minuman beralkohol &amp; Haram tapi enak</div>
       </div>
     </div>
     <nav style="margin-left:auto">
@@ -94,8 +93,8 @@
   <main class="container">
     <section class="hero">
       <div class="welcome">
-        <h1>Beli bir, wine — Aman & Terpercaya</h1>
-        <p>Pilih seusai selera mu yaa</p>
+        <h1>Beli bir, wine & spirit pilihan — Aman & Terpercaya</h1>
+        <p>Pilih sesuai selera mu yaaa</p>
         <div class="cta">
           <button class="primary" onclick="document.getElementById('produk').scrollIntoView({behavior:'smooth'})">Lihat Produk</button>
           <button class="ghost" onclick="alert('Demo: fitur chat belum tersedia')">Hubungi Penjual</button>
@@ -235,7 +234,7 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
     }
     document.getElementById('clearCart').addEventListener('click',()=>{ if(confirm('Kosongkan keranjang?')){ cart=[]; saveCart(); }});
 
- document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+   document.getElementById('checkoutBtn').addEventListener('click', ()=>{
   if(cart.length === 0){
     alert('Keranjang kosong');
     return;
@@ -264,10 +263,11 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
   message += `\n*Total:* Rp${total.toLocaleString('id')}\n\n`;
   message += `_Terima kasih telah berbelanja di WlynStore!_`;
 
- const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
-window.location.href = waUrl;
+  // Encode dan arahkan ke WhatsApp
+  const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+ window.location.href = waUrl;
 
-   // Kosongkan keranjang setelah checkout
+  // Kosongkan keranjang setelah checkout
   cart = [];
   saveCart();
 });
@@ -293,9 +293,4 @@ window.location.href = waUrl;
   </script>
 </body>
 </html>
-
-
-
-
-
 
