@@ -266,7 +266,7 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
 
   // Encode dan arahkan ke WhatsApp
   const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
-  window.open(url, '_blank');
+  window.location.href = waUrl;
 
   // Kosongkan keranjang setelah checkout
   cart = [];
@@ -294,6 +294,7 @@ Semua produk yang dijual di WlynStore dijamin asli, disimpan dengan standar peny
   </script>
 </body>
 </html>
+
 
 
 
